@@ -28,6 +28,9 @@ export function SolanaWallet({ mnemonic }: SolanaWalletProps) {
       >
         Add Wallet
       </Button>
+      {publicKeys.map((p) => (
+        <div>{p}</div>
+      ))}
     </div>
   );
 }
