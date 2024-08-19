@@ -11,7 +11,7 @@ export const EthWallet = ({ mnemonic }: EthWalletProps) => {
   const [addresses, setAddresses] = useState<string[]>([]);
 
   return (
-    <div>
+    <div className="text-white">
       <button
         onClick={async function () {
           const seed = await mnemonicToSeed(mnemonic);

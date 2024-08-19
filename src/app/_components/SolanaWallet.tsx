@@ -14,8 +14,8 @@ export function SolanaWallet({ mnemonic }: SolanaWalletProps) {
   const [publicKeys, setpublicKeys] = useState<string[]>([]);
 
   return (
-    <div>
-      <Button
+    <div className="text-white">
+      <button
         onClick={function () {
           const seed = mnemonicToSeed(mnemonic);
           const path = `m/44'/501'/${currentIndex}'/0'`;
@@ -26,8 +26,8 @@ export function SolanaWallet({ mnemonic }: SolanaWalletProps) {
           setpublicKeys([...publicKeys, keypair.publicKey.toBase58()]);
         }}
       >
-        Add Wallet
-      </Button>
+        Add Solana Wallet
+      </button>
       {publicKeys.map((p) => (
         <div>{p}</div>
       ))}

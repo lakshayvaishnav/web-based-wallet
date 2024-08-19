@@ -4,6 +4,8 @@ import { useState } from "react";
 import { generateMnemonic } from "bip39";
 import { Dialog } from "@/components/ui/dialog";
 import { tree } from "next/dist/build/templates/app-page";
+import { SolanaWallet } from "./_components/SolanaWallet";
+import { EthWallet } from "./_components/EthWallet";
 
 export default function Home() {
   const [mnemonic, setmnemonic] = useState("");
@@ -27,6 +29,9 @@ export default function Home() {
           disabled
         />
       </Dialog>
+
+      <SolanaWallet mnemonic={mnemonic} />
+      <EthWallet mnemonic={mnemonic} />
     </main>
   );
 }
