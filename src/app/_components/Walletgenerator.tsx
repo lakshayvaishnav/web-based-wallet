@@ -133,4 +133,61 @@ const WalletGenerator = () => {
       return null;
     }
   };
+
+  const handleGenerateWallet = () => {
+    let mnemonic = mnemonicInput.trim();
+    if (mnemonic) {
+      if (!validateMnemonic(mnemonic)) {
+        toast.error("Invalid recovry phrase. Please try again.");
+        return;
+      }
+    } else {
+      mnemonic = generateMnemonic();
+    }
+
+    const words = mnemonic.split(" ");
+    SetMnemonicWords(words);
+
+    const wallet = generateWalletFromMnemonic(
+      pathTypes[0],
+      mnemonic,
+      wallets.length
+    );
+
+    if (wallet) {
+      const updatedWallets = [...wallets, wallet];
+      setWallets(updatedWallets);
+      localStorage.setItem("wallets", JSON.stringify(updatedWallets));
+      localStorage.setItem("mnemonics", JSON.stringify(words));
+      localStorage.setItem("paths", JSON.stringify(pathTypes));
+      setvisiblePrivatekeys([...visiblePrivatekeys, false]);
+      setVisiblePhrases([...visiblePhrases, false]);
+      toast.success("Wallet generated successfully!");
+    }
+  };
+
+  const handleAddWallet = () => {
+    if (!mnemonicWords) {
+      toast.error("No mnemonic found. Please generate a wallet first.");
+      return;
+    }
+
+    const wallet = generateWalletFromMnemonic(
+      pathTypes[0],
+      mnemonicWords.join(" "),
+      wallets.length
+    );
+
+    if (wallet) {
+      const updatedWallets = [...wallets, wallet];
+      const updatedPathType = [pathTypes, pathTypes];
+      setWallets(updatedWallets);
+      localStorage.setItem("wallets", JSON.stringify(updatedWallets));
+      localStorage.setItem("pathTypes", JSON.stringify(updatedPathType));
+      setvisiblePrivatekeys([...visiblePrivatekeys, false]);
+      setVisiblePhrases([...visiblePhrases, false]);
+      toast.success("Wallet generated successfully!");
+    }
+  };
+  return <div className="flex flex-col gap-4"></div>;
 };
