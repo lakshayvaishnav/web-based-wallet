@@ -7,6 +7,9 @@ import { toast } from "sonner";
 import nacl from "tweetnacl";
 import bs58 from "bs58";
 import { ethers } from "ethers";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 interface Wallet {
   publickey: string;
   privatekey: string;
@@ -189,5 +192,103 @@ const WalletGenerator = () => {
       toast.success("Wallet generated successfully!");
     }
   };
-  return <div className="flex flex-col gap-4"></div>;
+  return (
+    <div className="flex flex-col gap-4">
+      {wallets.length === 0 && (
+        <motion.div
+          className="flex flex-col gap-4"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.3,
+            ease: "easeInOut",
+          }}
+        >
+          <div className="flex flex-col gap-4">
+            {pathTypes.length === 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.3,
+                  ease: "easeInOut",
+                }}
+                className="flex gap-4 flex-col my-12"
+              >
+                <div className="flex flex-col gap-2">
+                  <h1 className="tracking-tighter text-4xl md:text-5xl font-black">
+                    ZAR supoorts multiple Blockchain
+                  </h1>
+                  <p className="text-primary/80 font-semibold text-lg md:text-xl">
+                    choose a blockchain to get started
+                  </p>
+                </div>
+                <div className="flex gap-2">
+                  <Button
+                    size={"lg"}
+                    onClick={() => {
+                      setPathTypes(["501"]);
+                      toast.success(
+                        "Wallet selected. Please gnerate a wallet to continure"
+                      );
+                    }}
+                  >
+                    Solana
+                  </Button>
+                  <Button
+                    size={"lg"}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setPathTypes(["60"]);
+                      alert("button clicked");
+                      toast.success(
+                        "Wallet selected. Please generate a wallet to continue"
+                      );
+                    }}
+                  >
+                    Ethereum
+                  </Button>
+                </div>
+              </motion.div>
+            )}
+            {pathTypes.length !== 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.3,
+                  ease: "easeInOut",
+                }}
+                className="flex flex-col gap-4 my-12"
+              >
+                <div className="flex flex-col gap-2">
+                  <h1 className="tracking-tighter text-4xl md:text-5xl font-black">
+                    Secret Recovery Phrase
+                  </h1>
+                  <p className="text-primary/80 font-semibold text-lg md:text-xl">
+                    Save these words in a safe place.
+                  </p>
+                </div>
+                <div className="flex flex-col md:flex-row gap-4">
+                  <Input
+                    type="password"
+                    placeholder="enter secret phrase or leave blank to generate"
+                    onChange={(e) => setmnemonicInput(e.target.value)}
+                    value={mnemonicInput}
+                  />
+                  <Button size={"lg"} onClick={() => handleGenerateWallet()}>
+                    {mnemonicInput ? "Add Wallet" : "Generate Wallet"}
+                  </Button>
+                </div>
+              </motion.div>
+            )}
+          </div>
+        </motion.div>
+      )}
+
+      {/* Display secret Phrase */}
+    </div>
+  );
 };
+
+export default WalletGenerator;

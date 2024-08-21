@@ -6,12 +6,13 @@ import { Dialog } from "@/components/ui/dialog";
 import { tree } from "next/dist/build/templates/app-page";
 import { SolanaWallet } from "./_components/SolanaWallet";
 import { EthWallet } from "./_components/EthWallet";
+import WalletGenerator from "./_components/Walletgenerator";
 
 export default function Home() {
   const [mnemonic, setmnemonic] = useState("");
   return (
-    <main className="min-h-screen flex justify-center items-center flex-col gap-5">
-      <Button
+    <main className="max-w-7xl mx-auto flex flex-col gap-4 p-4 min-h-[92vh]">
+      {/* <Button
         onClick={async () => {
           const mn = await generateMnemonic();
           setmnemonic(mn);
@@ -31,7 +32,8 @@ export default function Home() {
       </Dialog>
 
       <SolanaWallet mnemonic={mnemonic} />
-      <EthWallet mnemonic={mnemonic} />
+      <EthWallet mnemonic={mnemonic} /> */}
+      <WalletGenerator />
     </main>
   );
 }
